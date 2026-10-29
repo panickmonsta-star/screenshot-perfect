@@ -53,4 +53,29 @@ export const walletService: WalletService = {
 
     return mockDelay({ wallet: { ...wallet }, transaction }, 40);
   },
+
+  async spendCoins(amount, title, seriesTitle, episodeNumber) {
+    if (wallet.balance < amount) {
+      return Promise.reject(new Error("Not enough coins. Top up your wallet to keep watching."));
+    }
+    await mockDelay(null, 350);
+    wallet.balance -= amount;
+    wallet.updatedAt = nowIso();
+
+    refCounter += 1;
+    const transaction: Transaction = {
+      id: `tx-local-${refCounter}`,
+      reference: `PM-TX-${(refCounter * 6271).toString(36).toUpperCase().slice(0, 6)}`,
+      type: "episode_unlock",
+      title,
+      seriesTitle,
+      episodeNumber,
+      coinAmount: -amount,
+      amountIdr: null,
+      status: "completed",
+      createdAt: nowIso(),
+    };
+    seedTransactions.unshift(transaction);
+    return mockDelay(transaction, 20);
+  },
 };

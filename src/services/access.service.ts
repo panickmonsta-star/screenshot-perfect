@@ -56,7 +56,22 @@ export const accessService: AccessService = {
       return Promise.reject(new Error("Not enough coins. Top up your wallet to keep watching."));
     }
 
-    await walletService.purchaseCoins("noop"); // never reached: guard below
-    return Promise.reject(new Error("unreachable"));
+    await walletService.spendCoins(
+      episode.coinPrice,
+      episode.title,
+      seedEpisodes.find((e) => e.id === episodeId)!.seriesSlug,
+      episode.episodeNumber,
+    );
+
+    const record: EpisodeAccessRecord = {
+      episodeId,
+      seriesId: episode.seriesId,
+      seriesSlug: episode.seriesSlug,
+      episodeNumber: episode.episodeNumber,
+      unlockedAt: nowIso(),
+      source: "coins",
+    };
+    unlocked.unshift(record);
+    return mockDelay(record, 40);
   },
 };
