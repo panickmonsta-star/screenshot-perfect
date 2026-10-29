@@ -10,6 +10,8 @@ export interface WalletService {
   getWallet(): Promise<Wallet>;
   listPackages(): Promise<CoinPackage[]>;
   purchaseCoins(packageId: string): Promise<{ wallet: Wallet; transaction: Transaction }>;
+  /** Internal spend used by the mock unlock flow. Negative coinAmount transaction. */
+  spendCoins(amount: number, title: string, seriesTitle: string, episodeNumber: number): Promise<Transaction>;
 }
 
 const wallet: Wallet = { balance: seedUser.coinBalance, updatedAt: nowIso() };
