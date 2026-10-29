@@ -6,11 +6,9 @@
  * browser memory/localStorage. Milestone 2 replaces this with real
  * Supabase auth while keeping the same interface.
  */
-import { seedUser, type } from "@/data/mock/seed";
+import { seedUser } from "@/data/mock/seed";
 import type { UserProfile } from "@/types/domain";
 import { mockDelay, nowIso } from "./mock";
-
-void type; // (seed re-export guard removed below)
 
 export interface AuthSession {
   user: UserProfile | null;
