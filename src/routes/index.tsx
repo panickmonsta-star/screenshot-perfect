@@ -9,7 +9,6 @@ import { SeriesCard } from "@/components/drama/cards";
 import { PosterGridSkeleton } from "@/components/shared/states";
 import { catalogQueries, libraryQueries } from "@/services";
 import { formatDuration, formatViews } from "@/lib/format";
-import { heroBackdrop } from "@/assets/hero";
 
 const GENRES = ["Romance", "Thriller", "Fantasy", "Comedy", "Mystery", "Drama", "Horror", "Action"];
 
@@ -41,7 +40,7 @@ function Hero() {
   if (!hero) return null;
   return (
     <section className="relative min-h-[540px] overflow-hidden border-b border-border/40">
-      <img src={heroBackdrop(hero.posterUrl)} alt="" className="absolute inset-0 size-full object-cover object-top opacity-60" />
+      <img src={hero.posterUrl} alt="" className="absolute inset-0 size-full object-cover object-top opacity-60" />
       <div className="hero-fade absolute inset-0" />
       <div className="relative mx-auto flex min-h-[540px] max-w-7xl flex-col justify-end px-4 pb-12 pt-24 sm:px-6">
         <div className="max-w-2xl space-y-4">
@@ -71,8 +70,6 @@ function Hero() {
 }
 
 function HomeSearch() {
-  const [value, setValue] = ["", ""];
-  void value; void setValue;
   return (
     <form
       className="mx-auto flex max-w-2xl gap-2 px-4 py-8"
