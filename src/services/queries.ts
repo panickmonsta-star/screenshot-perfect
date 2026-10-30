@@ -35,6 +35,7 @@ export const accessQueries = {
   unlockedIds: () =>
     q(["access", "unlocked-ids"], async () => (await accessService.listUnlocked()).map((u) => u.episodeId)),
   unlocked: () => q(["access", "unlocked"], () => accessService.listUnlocked()),
+  check: (episodeId: string) => q(["access", "check", episodeId], () => accessService.checkAccess(episodeId)),
 };
 
 export const libraryQueries = {
