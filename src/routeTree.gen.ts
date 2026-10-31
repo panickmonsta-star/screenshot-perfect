@@ -16,6 +16,8 @@ import { Route as LoginRouteImport } from './routes/login'
 import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as SignupRouteImport } from './routes/signup'
+import { Route as TransactionsRouteImport } from './routes/transactions'
+import { Route as WalletRouteImport } from './routes/wallet'
 import { Route as SeriesSlugRouteImport } from './routes/series.$slug'
 import { Route as WatchSlugEpisodeRouteImport } from './routes/watch.$slug.$episode'
 
@@ -54,6 +56,16 @@ const SignupRoute = SignupRouteImport.update({
   path: '/signup',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TransactionsRoute = TransactionsRouteImport.update({
+  id: '/transactions',
+  path: '/transactions',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const WalletRoute = WalletRouteImport.update({
+  id: '/wallet',
+  path: '/wallet',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SeriesSlugRoute = SeriesSlugRouteImport.update({
   id: '/series/$slug',
   path: '/series/$slug',
@@ -73,6 +85,8 @@ export interface FileRoutesByFullPath {
   '/profile': typeof ProfileRoute
   '/reset-password': typeof ResetPasswordRoute
   '/signup': typeof SignupRoute
+  '/transactions': typeof TransactionsRoute
+  '/wallet': typeof WalletRoute
   '/series/$slug': typeof SeriesSlugRoute
   '/watch/$slug/$episode': typeof WatchSlugEpisodeRoute
 }
@@ -84,6 +98,8 @@ export interface FileRoutesByTo {
   '/profile': typeof ProfileRoute
   '/reset-password': typeof ResetPasswordRoute
   '/signup': typeof SignupRoute
+  '/transactions': typeof TransactionsRoute
+  '/wallet': typeof WalletRoute
   '/series/$slug': typeof SeriesSlugRoute
   '/watch/$slug/$episode': typeof WatchSlugEpisodeRoute
 }
@@ -96,6 +112,8 @@ export interface FileRoutesById {
   '/profile': typeof ProfileRoute
   '/reset-password': typeof ResetPasswordRoute
   '/signup': typeof SignupRoute
+  '/transactions': typeof TransactionsRoute
+  '/wallet': typeof WalletRoute
   '/series/$slug': typeof SeriesSlugRoute
   '/watch/$slug/$episode': typeof WatchSlugEpisodeRoute
 }
@@ -109,6 +127,8 @@ export interface FileRouteTypes {
     | '/profile'
     | '/reset-password'
     | '/signup'
+    | '/transactions'
+    | '/wallet'
     | '/series/$slug'
     | '/watch/$slug/$episode'
   fileRoutesByTo: FileRoutesByTo
@@ -120,6 +140,8 @@ export interface FileRouteTypes {
     | '/profile'
     | '/reset-password'
     | '/signup'
+    | '/transactions'
+    | '/wallet'
     | '/series/$slug'
     | '/watch/$slug/$episode'
   id:
@@ -131,6 +153,8 @@ export interface FileRouteTypes {
     | '/profile'
     | '/reset-password'
     | '/signup'
+    | '/transactions'
+    | '/wallet'
     | '/series/$slug'
     | '/watch/$slug/$episode'
   fileRoutesById: FileRoutesById
@@ -143,6 +167,8 @@ export interface RootRouteChildren {
   ProfileRoute: typeof ProfileRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
   SignupRoute: typeof SignupRoute
+  TransactionsRoute: typeof TransactionsRoute
+  WalletRoute: typeof WalletRoute
   SeriesSlugRoute: typeof SeriesSlugRoute
   WatchSlugEpisodeRoute: typeof WatchSlugEpisodeRoute
 }
@@ -198,6 +224,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SignupRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/transactions': {
+      id: '/transactions'
+      path: '/transactions'
+      fullPath: '/transactions'
+      preLoaderRoute: typeof TransactionsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/wallet': {
+      id: '/wallet'
+      path: '/wallet'
+      fullPath: '/wallet'
+      preLoaderRoute: typeof WalletRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/series/$slug': {
       id: '/series/$slug'
       path: '/series/$slug'
@@ -223,6 +263,8 @@ const rootRouteChildren: RootRouteChildren = {
   ProfileRoute: ProfileRoute,
   ResetPasswordRoute: ResetPasswordRoute,
   SignupRoute: SignupRoute,
+  TransactionsRoute: TransactionsRoute,
+  WalletRoute: WalletRoute,
   SeriesSlugRoute: SeriesSlugRoute,
   WatchSlugEpisodeRoute: WatchSlugEpisodeRoute,
 }
