@@ -11,6 +11,8 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ExploreRouteImport } from './routes/explore'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as SignupRouteImport } from './routes/signup'
 import { Route as SeriesSlugRouteImport } from './routes/series.$slug'
 import { Route as WatchSlugEpisodeRouteImport } from './routes/watch.$slug.$episode'
 
@@ -22,6 +24,16 @@ const IndexRoute = IndexRouteImport.update({
 const ExploreRoute = ExploreRouteImport.update({
   id: '/explore',
   path: '/explore',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SignupRoute = SignupRouteImport.update({
+  id: '/signup',
+  path: '/signup',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SeriesSlugRoute = SeriesSlugRouteImport.update({
@@ -38,12 +50,16 @@ const WatchSlugEpisodeRoute = WatchSlugEpisodeRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/explore': typeof ExploreRoute
+  '/login': typeof LoginRoute
+  '/signup': typeof SignupRoute
   '/series/$slug': typeof SeriesSlugRoute
   '/watch/$slug/$episode': typeof WatchSlugEpisodeRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/explore': typeof ExploreRoute
+  '/login': typeof LoginRoute
+  '/signup': typeof SignupRoute
   '/series/$slug': typeof SeriesSlugRoute
   '/watch/$slug/$episode': typeof WatchSlugEpisodeRoute
 }
@@ -51,20 +67,43 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/explore': typeof ExploreRoute
+  '/login': typeof LoginRoute
+  '/signup': typeof SignupRoute
   '/series/$slug': typeof SeriesSlugRoute
   '/watch/$slug/$episode': typeof WatchSlugEpisodeRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/explore' | '/series/$slug' | '/watch/$slug/$episode'
+  fullPaths:
+    | '/'
+    | '/explore'
+    | '/login'
+    | '/signup'
+    | '/series/$slug'
+    | '/watch/$slug/$episode'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/explore' | '/series/$slug' | '/watch/$slug/$episode'
-  id: '__root__' | '/' | '/explore' | '/series/$slug' | '/watch/$slug/$episode'
+  to:
+    | '/'
+    | '/explore'
+    | '/login'
+    | '/signup'
+    | '/series/$slug'
+    | '/watch/$slug/$episode'
+  id:
+    | '__root__'
+    | '/'
+    | '/explore'
+    | '/login'
+    | '/signup'
+    | '/series/$slug'
+    | '/watch/$slug/$episode'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ExploreRoute: typeof ExploreRoute
+  LoginRoute: typeof LoginRoute
+  SignupRoute: typeof SignupRoute
   SeriesSlugRoute: typeof SeriesSlugRoute
   WatchSlugEpisodeRoute: typeof WatchSlugEpisodeRoute
 }
@@ -83,6 +122,20 @@ declare module '@tanstack/react-router' {
       path: '/explore'
       fullPath: '/explore'
       preLoaderRoute: typeof ExploreRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/signup': {
+      id: '/signup'
+      path: '/signup'
+      fullPath: '/signup'
+      preLoaderRoute: typeof SignupRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/series/$slug': {
@@ -105,6 +158,8 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ExploreRoute: ExploreRoute,
+  LoginRoute: LoginRoute,
+  SignupRoute: SignupRoute,
   SeriesSlugRoute: SeriesSlugRoute,
   WatchSlugEpisodeRoute: WatchSlugEpisodeRoute,
 }
