@@ -11,6 +11,15 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ExploreRouteImport } from './routes/explore'
+import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as ProfileRouteImport } from './routes/profile'
+import { Route as ResetPasswordRouteImport } from './routes/reset-password'
+import { Route as SignupRouteImport } from './routes/signup'
+import { Route as TransactionsRouteImport } from './routes/transactions'
+import { Route as WalletRouteImport } from './routes/wallet'
+import { Route as SeriesSlugRouteImport } from './routes/series.$slug'
+import { Route as WatchSlugEpisodeRouteImport } from './routes/watch.$slug.$episode'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -22,31 +31,146 @@ const ExploreRoute = ExploreRouteImport.update({
   path: '/explore',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ForgotPasswordRoute = ForgotPasswordRouteImport.update({
+  id: '/forgot-password',
+  path: '/forgot-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProfileRoute = ProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResetPasswordRoute = ResetPasswordRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SignupRoute = SignupRouteImport.update({
+  id: '/signup',
+  path: '/signup',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TransactionsRoute = TransactionsRouteImport.update({
+  id: '/transactions',
+  path: '/transactions',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const WalletRoute = WalletRouteImport.update({
+  id: '/wallet',
+  path: '/wallet',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SeriesSlugRoute = SeriesSlugRouteImport.update({
+  id: '/series/$slug',
+  path: '/series/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const WatchSlugEpisodeRoute = WatchSlugEpisodeRouteImport.update({
+  id: '/watch/$slug/$episode',
+  path: '/watch/$slug/$episode',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/explore': typeof ExploreRoute
+  '/forgot-password': typeof ForgotPasswordRoute
+  '/login': typeof LoginRoute
+  '/profile': typeof ProfileRoute
+  '/reset-password': typeof ResetPasswordRoute
+  '/signup': typeof SignupRoute
+  '/transactions': typeof TransactionsRoute
+  '/wallet': typeof WalletRoute
+  '/series/$slug': typeof SeriesSlugRoute
+  '/watch/$slug/$episode': typeof WatchSlugEpisodeRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/explore': typeof ExploreRoute
+  '/forgot-password': typeof ForgotPasswordRoute
+  '/login': typeof LoginRoute
+  '/profile': typeof ProfileRoute
+  '/reset-password': typeof ResetPasswordRoute
+  '/signup': typeof SignupRoute
+  '/transactions': typeof TransactionsRoute
+  '/wallet': typeof WalletRoute
+  '/series/$slug': typeof SeriesSlugRoute
+  '/watch/$slug/$episode': typeof WatchSlugEpisodeRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/explore': typeof ExploreRoute
+  '/forgot-password': typeof ForgotPasswordRoute
+  '/login': typeof LoginRoute
+  '/profile': typeof ProfileRoute
+  '/reset-password': typeof ResetPasswordRoute
+  '/signup': typeof SignupRoute
+  '/transactions': typeof TransactionsRoute
+  '/wallet': typeof WalletRoute
+  '/series/$slug': typeof SeriesSlugRoute
+  '/watch/$slug/$episode': typeof WatchSlugEpisodeRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/explore'
+  fullPaths:
+    | '/'
+    | '/explore'
+    | '/forgot-password'
+    | '/login'
+    | '/profile'
+    | '/reset-password'
+    | '/signup'
+    | '/transactions'
+    | '/wallet'
+    | '/series/$slug'
+    | '/watch/$slug/$episode'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/explore'
-  id: '__root__' | '/' | '/explore'
+  to:
+    | '/'
+    | '/explore'
+    | '/forgot-password'
+    | '/login'
+    | '/profile'
+    | '/reset-password'
+    | '/signup'
+    | '/transactions'
+    | '/wallet'
+    | '/series/$slug'
+    | '/watch/$slug/$episode'
+  id:
+    | '__root__'
+    | '/'
+    | '/explore'
+    | '/forgot-password'
+    | '/login'
+    | '/profile'
+    | '/reset-password'
+    | '/signup'
+    | '/transactions'
+    | '/wallet'
+    | '/series/$slug'
+    | '/watch/$slug/$episode'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ExploreRoute: typeof ExploreRoute
+  ForgotPasswordRoute: typeof ForgotPasswordRoute
+  LoginRoute: typeof LoginRoute
+  ProfileRoute: typeof ProfileRoute
+  ResetPasswordRoute: typeof ResetPasswordRoute
+  SignupRoute: typeof SignupRoute
+  TransactionsRoute: typeof TransactionsRoute
+  WalletRoute: typeof WalletRoute
+  SeriesSlugRoute: typeof SeriesSlugRoute
+  WatchSlugEpisodeRoute: typeof WatchSlugEpisodeRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -65,12 +189,84 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ExploreRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/forgot-password': {
+      id: '/forgot-password'
+      path: '/forgot-password'
+      fullPath: '/forgot-password'
+      preLoaderRoute: typeof ForgotPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/profile': {
+      id: '/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof ProfileRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reset-password': {
+      id: '/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof ResetPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/signup': {
+      id: '/signup'
+      path: '/signup'
+      fullPath: '/signup'
+      preLoaderRoute: typeof SignupRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/transactions': {
+      id: '/transactions'
+      path: '/transactions'
+      fullPath: '/transactions'
+      preLoaderRoute: typeof TransactionsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/wallet': {
+      id: '/wallet'
+      path: '/wallet'
+      fullPath: '/wallet'
+      preLoaderRoute: typeof WalletRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/series/$slug': {
+      id: '/series/$slug'
+      path: '/series/$slug'
+      fullPath: '/series/$slug'
+      preLoaderRoute: typeof SeriesSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/watch/$slug/$episode': {
+      id: '/watch/$slug/$episode'
+      path: '/watch/$slug/$episode'
+      fullPath: '/watch/$slug/$episode'
+      preLoaderRoute: typeof WatchSlugEpisodeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ExploreRoute: ExploreRoute,
+  ForgotPasswordRoute: ForgotPasswordRoute,
+  LoginRoute: LoginRoute,
+  ProfileRoute: ProfileRoute,
+  ResetPasswordRoute: ResetPasswordRoute,
+  SignupRoute: SignupRoute,
+  TransactionsRoute: TransactionsRoute,
+  WalletRoute: WalletRoute,
+  SeriesSlugRoute: SeriesSlugRoute,
+  WatchSlugEpisodeRoute: WatchSlugEpisodeRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
