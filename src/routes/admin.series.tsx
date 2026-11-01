@@ -12,6 +12,7 @@ import { Switch } from "@/components/ui/switch";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { AdminPageHeader, AdminTableWrap, PublicationBadge } from "@/components/admin/admin-shared";
 import { adminQueries, adminService } from "@/services";
+import { posters } from "@/assets/posters";
 import { formatViews, slugify } from "@/lib/format";
 import type { PublicationStatus, Series } from "@/types/domain";
 
@@ -69,7 +70,7 @@ function SeriesDialog({ form, onClose }: { form: SeriesFormValues | null; onClos
         synopsis: values.synopsis.trim(),
         genre: values.genre as Series["genre"],
         releaseYear: Number(values.releaseYear) || 2026,
-        posterUrl: "",
+        posterUrl: posters.cintaDiBalikKaca, // placeholder poster until real uploads exist
         status: values.status,
         featured: values.featured,
         trending: values.trending,

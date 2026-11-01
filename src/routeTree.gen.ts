@@ -19,6 +19,8 @@ import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as SignupRouteImport } from './routes/signup'
 import { Route as TransactionsRouteImport } from './routes/transactions'
 import { Route as WalletRouteImport } from './routes/wallet'
+import { Route as AdminIndexRouteImport } from './routes/admin.index'
+import { Route as AdminSeriesRouteImport } from './routes/admin.series'
 import { Route as SeriesSlugRouteImport } from './routes/series.$slug'
 import { Route as WatchSlugEpisodeRouteImport } from './routes/watch.$slug.$episode'
 
@@ -72,6 +74,16 @@ const WalletRoute = WalletRouteImport.update({
   path: '/wallet',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminIndexRoute = AdminIndexRouteImport.update({
+  id: '/admin/',
+  path: '/admin/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminSeriesRoute = AdminSeriesRouteImport.update({
+  id: '/admin/series',
+  path: '/admin/series',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SeriesSlugRoute = SeriesSlugRouteImport.update({
   id: '/series/$slug',
   path: '/series/$slug',
@@ -94,7 +106,9 @@ export interface FileRoutesByFullPath {
   '/signup': typeof SignupRoute
   '/transactions': typeof TransactionsRoute
   '/wallet': typeof WalletRoute
+  '/admin/series': typeof AdminSeriesRoute
   '/series/$slug': typeof SeriesSlugRoute
+  '/admin/': typeof AdminIndexRoute
   '/watch/$slug/$episode': typeof WatchSlugEpisodeRoute
 }
 export interface FileRoutesByTo {
@@ -108,7 +122,9 @@ export interface FileRoutesByTo {
   '/signup': typeof SignupRoute
   '/transactions': typeof TransactionsRoute
   '/wallet': typeof WalletRoute
+  '/admin/series': typeof AdminSeriesRoute
   '/series/$slug': typeof SeriesSlugRoute
+  '/admin': typeof AdminIndexRoute
   '/watch/$slug/$episode': typeof WatchSlugEpisodeRoute
 }
 export interface FileRoutesById {
@@ -123,7 +139,9 @@ export interface FileRoutesById {
   '/signup': typeof SignupRoute
   '/transactions': typeof TransactionsRoute
   '/wallet': typeof WalletRoute
+  '/admin/series': typeof AdminSeriesRoute
   '/series/$slug': typeof SeriesSlugRoute
+  '/admin/': typeof AdminIndexRoute
   '/watch/$slug/$episode': typeof WatchSlugEpisodeRoute
 }
 export interface FileRouteTypes {
@@ -139,7 +157,9 @@ export interface FileRouteTypes {
     | '/signup'
     | '/transactions'
     | '/wallet'
+    | '/admin/series'
     | '/series/$slug'
+    | '/admin/'
     | '/watch/$slug/$episode'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -153,7 +173,9 @@ export interface FileRouteTypes {
     | '/signup'
     | '/transactions'
     | '/wallet'
+    | '/admin/series'
     | '/series/$slug'
+    | '/admin'
     | '/watch/$slug/$episode'
   id:
     | '__root__'
@@ -167,7 +189,9 @@ export interface FileRouteTypes {
     | '/signup'
     | '/transactions'
     | '/wallet'
+    | '/admin/series'
     | '/series/$slug'
+    | '/admin/'
     | '/watch/$slug/$episode'
   fileRoutesById: FileRoutesById
 }
@@ -182,7 +206,9 @@ export interface RootRouteChildren {
   SignupRoute: typeof SignupRoute
   TransactionsRoute: typeof TransactionsRoute
   WalletRoute: typeof WalletRoute
+  AdminSeriesRoute: typeof AdminSeriesRoute
   SeriesSlugRoute: typeof SeriesSlugRoute
+  AdminIndexRoute: typeof AdminIndexRoute
   WatchSlugEpisodeRoute: typeof WatchSlugEpisodeRoute
 }
 
@@ -258,6 +284,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof WalletRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/': {
+      id: '/admin/'
+      path: '/admin'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/series': {
+      id: '/admin/series'
+      path: '/admin/series'
+      fullPath: '/admin/series'
+      preLoaderRoute: typeof AdminSeriesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/series/$slug': {
       id: '/series/$slug'
       path: '/series/$slug'
@@ -286,7 +326,9 @@ const rootRouteChildren: RootRouteChildren = {
   SignupRoute: SignupRoute,
   TransactionsRoute: TransactionsRoute,
   WalletRoute: WalletRoute,
+  AdminSeriesRoute: AdminSeriesRoute,
   SeriesSlugRoute: SeriesSlugRoute,
+  AdminIndexRoute: AdminIndexRoute,
   WatchSlugEpisodeRoute: WatchSlugEpisodeRoute,
 }
 export const routeTree = rootRouteImport
