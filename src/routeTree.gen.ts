@@ -21,8 +21,10 @@ import { Route as TransactionsRouteImport } from './routes/transactions'
 import { Route as WalletRouteImport } from './routes/wallet'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as AdminCoinPackagesRouteImport } from './routes/admin.coin-packages'
+import { Route as AdminDownloadsRouteImport } from './routes/admin.downloads'
 import { Route as AdminEpisodesRouteImport } from './routes/admin.episodes'
 import { Route as AdminSeriesRouteImport } from './routes/admin.series'
+import { Route as AdminSettingsRouteImport } from './routes/admin.settings'
 import { Route as AdminTransactionsRouteImport } from './routes/admin.transactions'
 import { Route as AdminUsersRouteImport } from './routes/admin.users'
 import { Route as SeriesSlugRouteImport } from './routes/series.$slug'
@@ -88,6 +90,11 @@ const AdminCoinPackagesRoute = AdminCoinPackagesRouteImport.update({
   path: '/admin/coin-packages',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminDownloadsRoute = AdminDownloadsRouteImport.update({
+  id: '/admin/downloads',
+  path: '/admin/downloads',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminEpisodesRoute = AdminEpisodesRouteImport.update({
   id: '/admin/episodes',
   path: '/admin/episodes',
@@ -96,6 +103,11 @@ const AdminEpisodesRoute = AdminEpisodesRouteImport.update({
 const AdminSeriesRoute = AdminSeriesRouteImport.update({
   id: '/admin/series',
   path: '/admin/series',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminSettingsRoute = AdminSettingsRouteImport.update({
+  id: '/admin/settings',
+  path: '/admin/settings',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminTransactionsRoute = AdminTransactionsRouteImport.update({
@@ -131,8 +143,10 @@ export interface FileRoutesByFullPath {
   '/transactions': typeof TransactionsRoute
   '/wallet': typeof WalletRoute
   '/admin/coin-packages': typeof AdminCoinPackagesRoute
+  '/admin/downloads': typeof AdminDownloadsRoute
   '/admin/episodes': typeof AdminEpisodesRoute
   '/admin/series': typeof AdminSeriesRoute
+  '/admin/settings': typeof AdminSettingsRoute
   '/admin/transactions': typeof AdminTransactionsRoute
   '/admin/users': typeof AdminUsersRoute
   '/series/$slug': typeof SeriesSlugRoute
@@ -151,8 +165,10 @@ export interface FileRoutesByTo {
   '/transactions': typeof TransactionsRoute
   '/wallet': typeof WalletRoute
   '/admin/coin-packages': typeof AdminCoinPackagesRoute
+  '/admin/downloads': typeof AdminDownloadsRoute
   '/admin/episodes': typeof AdminEpisodesRoute
   '/admin/series': typeof AdminSeriesRoute
+  '/admin/settings': typeof AdminSettingsRoute
   '/admin/transactions': typeof AdminTransactionsRoute
   '/admin/users': typeof AdminUsersRoute
   '/series/$slug': typeof SeriesSlugRoute
@@ -172,8 +188,10 @@ export interface FileRoutesById {
   '/transactions': typeof TransactionsRoute
   '/wallet': typeof WalletRoute
   '/admin/coin-packages': typeof AdminCoinPackagesRoute
+  '/admin/downloads': typeof AdminDownloadsRoute
   '/admin/episodes': typeof AdminEpisodesRoute
   '/admin/series': typeof AdminSeriesRoute
+  '/admin/settings': typeof AdminSettingsRoute
   '/admin/transactions': typeof AdminTransactionsRoute
   '/admin/users': typeof AdminUsersRoute
   '/series/$slug': typeof SeriesSlugRoute
@@ -194,8 +212,10 @@ export interface FileRouteTypes {
     | '/transactions'
     | '/wallet'
     | '/admin/coin-packages'
+    | '/admin/downloads'
     | '/admin/episodes'
     | '/admin/series'
+    | '/admin/settings'
     | '/admin/transactions'
     | '/admin/users'
     | '/series/$slug'
@@ -214,8 +234,10 @@ export interface FileRouteTypes {
     | '/transactions'
     | '/wallet'
     | '/admin/coin-packages'
+    | '/admin/downloads'
     | '/admin/episodes'
     | '/admin/series'
+    | '/admin/settings'
     | '/admin/transactions'
     | '/admin/users'
     | '/series/$slug'
@@ -234,8 +256,10 @@ export interface FileRouteTypes {
     | '/transactions'
     | '/wallet'
     | '/admin/coin-packages'
+    | '/admin/downloads'
     | '/admin/episodes'
     | '/admin/series'
+    | '/admin/settings'
     | '/admin/transactions'
     | '/admin/users'
     | '/series/$slug'
@@ -255,8 +279,10 @@ export interface RootRouteChildren {
   TransactionsRoute: typeof TransactionsRoute
   WalletRoute: typeof WalletRoute
   AdminCoinPackagesRoute: typeof AdminCoinPackagesRoute
+  AdminDownloadsRoute: typeof AdminDownloadsRoute
   AdminEpisodesRoute: typeof AdminEpisodesRoute
   AdminSeriesRoute: typeof AdminSeriesRoute
+  AdminSettingsRoute: typeof AdminSettingsRoute
   AdminTransactionsRoute: typeof AdminTransactionsRoute
   AdminUsersRoute: typeof AdminUsersRoute
   SeriesSlugRoute: typeof SeriesSlugRoute
@@ -350,6 +376,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminCoinPackagesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/downloads': {
+      id: '/admin/downloads'
+      path: '/admin/downloads'
+      fullPath: '/admin/downloads'
+      preLoaderRoute: typeof AdminDownloadsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin/episodes': {
       id: '/admin/episodes'
       path: '/admin/episodes'
@@ -362,6 +395,13 @@ declare module '@tanstack/react-router' {
       path: '/admin/series'
       fullPath: '/admin/series'
       preLoaderRoute: typeof AdminSeriesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/settings': {
+      id: '/admin/settings'
+      path: '/admin/settings'
+      fullPath: '/admin/settings'
+      preLoaderRoute: typeof AdminSettingsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/admin/transactions': {
@@ -407,8 +447,10 @@ const rootRouteChildren: RootRouteChildren = {
   TransactionsRoute: TransactionsRoute,
   WalletRoute: WalletRoute,
   AdminCoinPackagesRoute: AdminCoinPackagesRoute,
+  AdminDownloadsRoute: AdminDownloadsRoute,
   AdminEpisodesRoute: AdminEpisodesRoute,
   AdminSeriesRoute: AdminSeriesRoute,
+  AdminSettingsRoute: AdminSettingsRoute,
   AdminTransactionsRoute: AdminTransactionsRoute,
   AdminUsersRoute: AdminUsersRoute,
   SeriesSlugRoute: SeriesSlugRoute,
