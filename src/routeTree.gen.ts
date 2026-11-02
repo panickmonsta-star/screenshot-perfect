@@ -23,6 +23,8 @@ import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as AdminCoinPackagesRouteImport } from './routes/admin.coin-packages'
 import { Route as AdminEpisodesRouteImport } from './routes/admin.episodes'
 import { Route as AdminSeriesRouteImport } from './routes/admin.series'
+import { Route as AdminTransactionsRouteImport } from './routes/admin.transactions'
+import { Route as AdminUsersRouteImport } from './routes/admin.users'
 import { Route as SeriesSlugRouteImport } from './routes/series.$slug'
 import { Route as WatchSlugEpisodeRouteImport } from './routes/watch.$slug.$episode'
 
@@ -96,6 +98,16 @@ const AdminSeriesRoute = AdminSeriesRouteImport.update({
   path: '/admin/series',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminTransactionsRoute = AdminTransactionsRouteImport.update({
+  id: '/admin/transactions',
+  path: '/admin/transactions',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminUsersRoute = AdminUsersRouteImport.update({
+  id: '/admin/users',
+  path: '/admin/users',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SeriesSlugRoute = SeriesSlugRouteImport.update({
   id: '/series/$slug',
   path: '/series/$slug',
@@ -121,6 +133,8 @@ export interface FileRoutesByFullPath {
   '/admin/coin-packages': typeof AdminCoinPackagesRoute
   '/admin/episodes': typeof AdminEpisodesRoute
   '/admin/series': typeof AdminSeriesRoute
+  '/admin/transactions': typeof AdminTransactionsRoute
+  '/admin/users': typeof AdminUsersRoute
   '/series/$slug': typeof SeriesSlugRoute
   '/admin/': typeof AdminIndexRoute
   '/watch/$slug/$episode': typeof WatchSlugEpisodeRoute
@@ -139,6 +153,8 @@ export interface FileRoutesByTo {
   '/admin/coin-packages': typeof AdminCoinPackagesRoute
   '/admin/episodes': typeof AdminEpisodesRoute
   '/admin/series': typeof AdminSeriesRoute
+  '/admin/transactions': typeof AdminTransactionsRoute
+  '/admin/users': typeof AdminUsersRoute
   '/series/$slug': typeof SeriesSlugRoute
   '/admin': typeof AdminIndexRoute
   '/watch/$slug/$episode': typeof WatchSlugEpisodeRoute
@@ -158,6 +174,8 @@ export interface FileRoutesById {
   '/admin/coin-packages': typeof AdminCoinPackagesRoute
   '/admin/episodes': typeof AdminEpisodesRoute
   '/admin/series': typeof AdminSeriesRoute
+  '/admin/transactions': typeof AdminTransactionsRoute
+  '/admin/users': typeof AdminUsersRoute
   '/series/$slug': typeof SeriesSlugRoute
   '/admin/': typeof AdminIndexRoute
   '/watch/$slug/$episode': typeof WatchSlugEpisodeRoute
@@ -178,6 +196,8 @@ export interface FileRouteTypes {
     | '/admin/coin-packages'
     | '/admin/episodes'
     | '/admin/series'
+    | '/admin/transactions'
+    | '/admin/users'
     | '/series/$slug'
     | '/admin/'
     | '/watch/$slug/$episode'
@@ -196,6 +216,8 @@ export interface FileRouteTypes {
     | '/admin/coin-packages'
     | '/admin/episodes'
     | '/admin/series'
+    | '/admin/transactions'
+    | '/admin/users'
     | '/series/$slug'
     | '/admin'
     | '/watch/$slug/$episode'
@@ -214,6 +236,8 @@ export interface FileRouteTypes {
     | '/admin/coin-packages'
     | '/admin/episodes'
     | '/admin/series'
+    | '/admin/transactions'
+    | '/admin/users'
     | '/series/$slug'
     | '/admin/'
     | '/watch/$slug/$episode'
@@ -233,6 +257,8 @@ export interface RootRouteChildren {
   AdminCoinPackagesRoute: typeof AdminCoinPackagesRoute
   AdminEpisodesRoute: typeof AdminEpisodesRoute
   AdminSeriesRoute: typeof AdminSeriesRoute
+  AdminTransactionsRoute: typeof AdminTransactionsRoute
+  AdminUsersRoute: typeof AdminUsersRoute
   SeriesSlugRoute: typeof SeriesSlugRoute
   AdminIndexRoute: typeof AdminIndexRoute
   WatchSlugEpisodeRoute: typeof WatchSlugEpisodeRoute
@@ -338,6 +364,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminSeriesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/transactions': {
+      id: '/admin/transactions'
+      path: '/admin/transactions'
+      fullPath: '/admin/transactions'
+      preLoaderRoute: typeof AdminTransactionsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/users': {
+      id: '/admin/users'
+      path: '/admin/users'
+      fullPath: '/admin/users'
+      preLoaderRoute: typeof AdminUsersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/series/$slug': {
       id: '/series/$slug'
       path: '/series/$slug'
@@ -369,6 +409,8 @@ const rootRouteChildren: RootRouteChildren = {
   AdminCoinPackagesRoute: AdminCoinPackagesRoute,
   AdminEpisodesRoute: AdminEpisodesRoute,
   AdminSeriesRoute: AdminSeriesRoute,
+  AdminTransactionsRoute: AdminTransactionsRoute,
+  AdminUsersRoute: AdminUsersRoute,
   SeriesSlugRoute: SeriesSlugRoute,
   AdminIndexRoute: AdminIndexRoute,
   WatchSlugEpisodeRoute: WatchSlugEpisodeRoute,
