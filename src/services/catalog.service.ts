@@ -69,11 +69,12 @@ export const catalogService: CatalogService = {
       .filter((e) => e.seriesId === series.id && e.status === "published")
       .sort((a, b) => a.episodeNumber - b.episodeNumber);
     const idx = published.findIndex((e) => e.episodeNumber === episodeNumber);
-    if (idx === -1) return mockDelay(null, 150);
+    const episode = idx === -1 ? undefined : published[idx];
+    if (!episode) return mockDelay(null, 150);
     return mockDelay(
       {
         series,
-        episode: published[idx],
+        episode,
         neighbours: { prev: published[idx - 1] ?? null, next: published[idx + 1] ?? null },
       },
       150,

@@ -72,10 +72,11 @@ export const authService: AuthService = {
   async signIn({ email, password }) {
     await mockDelay(null, 450);
     if (password.length < 6) throw new Error("Password must be at least 6 characters.");
+    const local = (email.split("@")[0] ?? "Viewer").replace(/[._]/g, " ") || "Viewer";
     const user: UserProfile = {
       ...seedUser,
       email,
-      name: email.split("@")[0] ? email.split("@")[0].replace(/[._]/g, " ") : "Viewer",
+      name: local,
     };
     setSession({ user });
     return user;

@@ -51,8 +51,8 @@ export const accessService: AccessService = {
     const existing = unlocked.find((u) => u.episodeId === episodeId);
     if (existing) return mockDelay(existing, 100);
 
-    const { wallet } = await walletService.getWallet();
-    if (wallet.balance < episode.coinPrice) {
+    const current = await walletService.getWallet();
+    if (current.balance < episode.coinPrice) {
       return Promise.reject(new Error("Not enough coins. Top up your wallet to keep watching."));
     }
 
