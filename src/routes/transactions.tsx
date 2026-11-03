@@ -17,7 +17,18 @@ const searchSchema = z.object({
 });
 
 export const Route = createFileRoute("/transactions")({
-  validateSearch: searchSchema,
+  validateSearch: (search: Record<string, string>) => {
+    const page = Number(search.page);
+    return {
+      type: (["all", "coin_purchase", "episode_unlock"] as const).includes(search.type as TransactionType)
+        ? (search.type as TransactionType | "all")
+        : undefined,
+      status: (["all", "completed", "pending", "failed"] as const).includes(search.status as TransactionStatus)
+        ? (search.status as TransactionStatus | "all")
+        : undefined,
+      page: Number.isInteger(page) && page >= 1 ? page : undefined,
+    };
+  },
   head: () => ({
     meta: [
       { title: "Transaction history — Panick Monsta" },

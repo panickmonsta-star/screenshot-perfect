@@ -16,7 +16,13 @@ const searchSchema = z.object({
 });
 
 export const Route = createFileRoute("/explore")({
-  validateSearch: searchSchema,
+  validateSearch: (search: Record<string, string>) => ({
+    q: typeof search.q === "string" && search.q ? search.q : undefined,
+    genre: typeof search.genre === "string" && search.genre ? search.genre : undefined,
+    sort: (["trending", "newest", "popular", "title"] as const).includes(search.sort as SeriesSort)
+      ? (search.sort as SeriesSort)
+      : undefined,
+  }),
   head: () => ({
     meta: [
       { title: "Explore dramas — Panick Monsta" },
