@@ -12,17 +12,18 @@ import type { TransactionStatus, TransactionType } from "@/types/domain";
 
 export const Route = createFileRoute("/transactions")({
   validateSearch: (search: Record<string, string>) => {
-    const page = Number(search.page);
+    const page = Number(search["page"]);
     return {
-      type: (["all", "coin_purchase", "episode_unlock"] as const).includes(search.type as TransactionType)
-        ? (search.type as TransactionType | "all")
+      type: (["all", "coin_purchase", "episode_unlock"] as const).includes(search["type"] as TransactionType)
+        ? (search["type"] as TransactionType | "all")
         : undefined,
-      status: (["all", "completed", "pending", "failed"] as const).includes(search.status as TransactionStatus)
-        ? (search.status as TransactionStatus | "all")
+      status: (["all", "completed", "pending", "failed"] as const).includes(search["status"] as TransactionStatus)
+        ? (search["status"] as TransactionStatus | "all")
         : undefined,
       page: Number.isInteger(page) && page >= 1 ? page : undefined,
     };
   },
+  loaderDeps: ({ search }) => ({ type: search.type, status: search.status, page: search.page }),
   head: () => ({
     meta: [
       { title: "Transaction history — Panick Monsta" },
@@ -33,12 +34,12 @@ export const Route = createFileRoute("/transactions")({
       { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
-  loader: async ({ context, search }) => {
+  loader: async ({ context, deps }) => {
     await context.queryClient.ensureQueryData(
       transactionQueries.page({
-        type: (search.type as TransactionFilter["type"]) ?? "all",
-        status: (search.status as TransactionFilter["status"]) ?? "all",
-        page: search.page ?? 1,
+        type: (deps.type as TransactionFilter["type"]) ?? "all",
+        status: (deps.status as TransactionFilter["status"]) ?? "all",
+        page: deps.page ?? 1,
       }),
     );
   },
