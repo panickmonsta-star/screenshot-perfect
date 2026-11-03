@@ -35,7 +35,7 @@ export const Route = createFileRoute("/watch/$slug/$episode")({
       context.queryClient.ensureQueryData(catalogQueries.episodes(params.slug)),
       context.queryClient.ensureQueryData(walletQueries.balance()),
     ]);
-    return data;
+    return { series: data.series, episode: data.episode, neighbours: data.neighbours };
   },
   component: WatchPage,
 });
