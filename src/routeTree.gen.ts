@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AdminRouteImport } from './routes/admin'
 import { Route as ExploreRouteImport } from './routes/explore'
 import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
 import { Route as LibraryRouteImport } from './routes/library'
@@ -33,6 +34,11 @@ import { Route as WatchSlugEpisodeRouteImport } from './routes/watch.$slug.$epis
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ExploreRoute = ExploreRouteImport.update({
@@ -81,44 +87,44 @@ const WalletRoute = WalletRouteImport.update({
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminIndexRoute = AdminIndexRouteImport.update({
-  id: '/admin/',
-  path: '/admin/',
-  getParentRoute: () => rootRouteImport,
+  id: '/',
+  path: '/',
+  getParentRoute: () => AdminRoute,
 } as any)
 const AdminCoinPackagesRoute = AdminCoinPackagesRouteImport.update({
-  id: '/admin/coin-packages',
-  path: '/admin/coin-packages',
-  getParentRoute: () => rootRouteImport,
+  id: '/coin-packages',
+  path: '/coin-packages',
+  getParentRoute: () => AdminRoute,
 } as any)
 const AdminDownloadsRoute = AdminDownloadsRouteImport.update({
-  id: '/admin/downloads',
-  path: '/admin/downloads',
-  getParentRoute: () => rootRouteImport,
+  id: '/downloads',
+  path: '/downloads',
+  getParentRoute: () => AdminRoute,
 } as any)
 const AdminEpisodesRoute = AdminEpisodesRouteImport.update({
-  id: '/admin/episodes',
-  path: '/admin/episodes',
-  getParentRoute: () => rootRouteImport,
+  id: '/episodes',
+  path: '/episodes',
+  getParentRoute: () => AdminRoute,
 } as any)
 const AdminSeriesRoute = AdminSeriesRouteImport.update({
-  id: '/admin/series',
-  path: '/admin/series',
-  getParentRoute: () => rootRouteImport,
+  id: '/series',
+  path: '/series',
+  getParentRoute: () => AdminRoute,
 } as any)
 const AdminSettingsRoute = AdminSettingsRouteImport.update({
-  id: '/admin/settings',
-  path: '/admin/settings',
-  getParentRoute: () => rootRouteImport,
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => AdminRoute,
 } as any)
 const AdminTransactionsRoute = AdminTransactionsRouteImport.update({
-  id: '/admin/transactions',
-  path: '/admin/transactions',
-  getParentRoute: () => rootRouteImport,
+  id: '/transactions',
+  path: '/transactions',
+  getParentRoute: () => AdminRoute,
 } as any)
 const AdminUsersRoute = AdminUsersRouteImport.update({
-  id: '/admin/users',
-  path: '/admin/users',
-  getParentRoute: () => rootRouteImport,
+  id: '/users',
+  path: '/users',
+  getParentRoute: () => AdminRoute,
 } as any)
 const SeriesSlugRoute = SeriesSlugRouteImport.update({
   id: '/series/$slug',
@@ -133,6 +139,7 @@ const WatchSlugEpisodeRoute = WatchSlugEpisodeRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRouteWithChildren
   '/explore': typeof ExploreRoute
   '/forgot-password': typeof ForgotPasswordRoute
   '/library': typeof LibraryRoute
@@ -178,6 +185,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/admin': typeof AdminRouteWithChildren
   '/explore': typeof ExploreRoute
   '/forgot-password': typeof ForgotPasswordRoute
   '/library': typeof LibraryRoute
@@ -202,6 +210,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/admin'
     | '/explore'
     | '/forgot-password'
     | '/library'
@@ -246,6 +255,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/admin'
     | '/explore'
     | '/forgot-password'
     | '/library'
@@ -269,6 +279,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdminRoute: typeof AdminRouteWithChildren
   ExploreRoute: typeof ExploreRoute
   ForgotPasswordRoute: typeof ForgotPasswordRoute
   LibraryRoute: typeof LibraryRoute
@@ -278,15 +289,7 @@ export interface RootRouteChildren {
   SignupRoute: typeof SignupRoute
   TransactionsRoute: typeof TransactionsRoute
   WalletRoute: typeof WalletRoute
-  AdminCoinPackagesRoute: typeof AdminCoinPackagesRoute
-  AdminDownloadsRoute: typeof AdminDownloadsRoute
-  AdminEpisodesRoute: typeof AdminEpisodesRoute
-  AdminSeriesRoute: typeof AdminSeriesRoute
-  AdminSettingsRoute: typeof AdminSettingsRoute
-  AdminTransactionsRoute: typeof AdminTransactionsRoute
-  AdminUsersRoute: typeof AdminUsersRoute
   SeriesSlugRoute: typeof SeriesSlugRoute
-  AdminIndexRoute: typeof AdminIndexRoute
   WatchSlugEpisodeRoute: typeof WatchSlugEpisodeRoute
 }
 
@@ -297,6 +300,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/explore': {
@@ -364,59 +374,59 @@ declare module '@tanstack/react-router' {
     }
     '/admin/': {
       id: '/admin/'
-      path: '/admin'
+      path: '/'
       fullPath: '/admin/'
       preLoaderRoute: typeof AdminIndexRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof AdminRoute
     }
     '/admin/coin-packages': {
       id: '/admin/coin-packages'
-      path: '/admin/coin-packages'
+      path: '/coin-packages'
       fullPath: '/admin/coin-packages'
       preLoaderRoute: typeof AdminCoinPackagesRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof AdminRoute
     }
     '/admin/downloads': {
       id: '/admin/downloads'
-      path: '/admin/downloads'
+      path: '/downloads'
       fullPath: '/admin/downloads'
       preLoaderRoute: typeof AdminDownloadsRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof AdminRoute
     }
     '/admin/episodes': {
       id: '/admin/episodes'
-      path: '/admin/episodes'
+      path: '/episodes'
       fullPath: '/admin/episodes'
       preLoaderRoute: typeof AdminEpisodesRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof AdminRoute
     }
     '/admin/series': {
       id: '/admin/series'
-      path: '/admin/series'
+      path: '/series'
       fullPath: '/admin/series'
       preLoaderRoute: typeof AdminSeriesRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof AdminRoute
     }
     '/admin/settings': {
       id: '/admin/settings'
-      path: '/admin/settings'
+      path: '/settings'
       fullPath: '/admin/settings'
       preLoaderRoute: typeof AdminSettingsRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof AdminRoute
     }
     '/admin/transactions': {
       id: '/admin/transactions'
-      path: '/admin/transactions'
+      path: '/transactions'
       fullPath: '/admin/transactions'
       preLoaderRoute: typeof AdminTransactionsRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof AdminRoute
     }
     '/admin/users': {
       id: '/admin/users'
-      path: '/admin/users'
+      path: '/users'
       fullPath: '/admin/users'
       preLoaderRoute: typeof AdminUsersRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof AdminRoute
     }
     '/series/$slug': {
       id: '/series/$slug'
@@ -435,8 +445,33 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface AdminRouteChildren {
+  AdminCoinPackagesRoute: typeof AdminCoinPackagesRoute
+  AdminDownloadsRoute: typeof AdminDownloadsRoute
+  AdminEpisodesRoute: typeof AdminEpisodesRoute
+  AdminSeriesRoute: typeof AdminSeriesRoute
+  AdminSettingsRoute: typeof AdminSettingsRoute
+  AdminTransactionsRoute: typeof AdminTransactionsRoute
+  AdminUsersRoute: typeof AdminUsersRoute
+  AdminIndexRoute: typeof AdminIndexRoute
+}
+
+const AdminRouteChildren: AdminRouteChildren = {
+  AdminCoinPackagesRoute: AdminCoinPackagesRoute,
+  AdminDownloadsRoute: AdminDownloadsRoute,
+  AdminEpisodesRoute: AdminEpisodesRoute,
+  AdminSeriesRoute: AdminSeriesRoute,
+  AdminSettingsRoute: AdminSettingsRoute,
+  AdminTransactionsRoute: AdminTransactionsRoute,
+  AdminUsersRoute: AdminUsersRoute,
+  AdminIndexRoute: AdminIndexRoute,
+}
+
+const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdminRoute: AdminRouteWithChildren,
   ExploreRoute: ExploreRoute,
   ForgotPasswordRoute: ForgotPasswordRoute,
   LibraryRoute: LibraryRoute,
@@ -446,15 +481,7 @@ const rootRouteChildren: RootRouteChildren = {
   SignupRoute: SignupRoute,
   TransactionsRoute: TransactionsRoute,
   WalletRoute: WalletRoute,
-  AdminCoinPackagesRoute: AdminCoinPackagesRoute,
-  AdminDownloadsRoute: AdminDownloadsRoute,
-  AdminEpisodesRoute: AdminEpisodesRoute,
-  AdminSeriesRoute: AdminSeriesRoute,
-  AdminSettingsRoute: AdminSettingsRoute,
-  AdminTransactionsRoute: AdminTransactionsRoute,
-  AdminUsersRoute: AdminUsersRoute,
   SeriesSlugRoute: SeriesSlugRoute,
-  AdminIndexRoute: AdminIndexRoute,
   WatchSlugEpisodeRoute: WatchSlugEpisodeRoute,
 }
 export const routeTree = rootRouteImport

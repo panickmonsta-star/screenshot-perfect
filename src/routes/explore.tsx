@@ -7,16 +7,22 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { SeriesCard } from "@/components/drama/cards";
 import { EmptyState, PosterGridSkeleton } from "@/components/shared/states";
 import { catalogQueries, type SeriesSort } from "@/services";
-import { z } from "zod";
 
-const searchSchema = z.object({
-  q: z.string().optional(),
-  genre: z.string().optional(),
-  sort: z.enum(["trending", "newest", "popular", "title"]).optional(),
-});
 
 export const Route = createFileRoute("/explore")({
-  validateSearch: searchSchema,
+  validateSearch: (search: Record<string, string>) => {
+    const out: { q?: string; genre?: string; sort?: SeriesSort } = {};
+    const qVal = search["q"];
+    if (qVal) out.q = qVal;
+    const genreVal = search["genre"];
+    if (genreVal) out.genre = genreVal;
+    const sortVal = search["sort"];
+    if ((["trending", "newest", "popular", "title"] as const).includes(sortVal as SeriesSort)) {
+      out.sort = sortVal as SeriesSort;
+    }
+    return out;
+  },
+  loaderDeps: ({ search }) => ({ q: search.q, genre: search.genre, sort: search.sort }),
   head: () => ({
     meta: [
       { title: "Explore dramas — Panick Monsta" },
@@ -27,9 +33,9 @@ export const Route = createFileRoute("/explore")({
       { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
-  loader: async ({ context, search }) => {
+  loader: async ({ context, deps }) => {
     await context.queryClient.ensureQueryData(
-      catalogQueries.list({ query: search.q, genre: search.genre, sort: search.sort ?? "trending" }),
+      catalogQueries.list({ query: deps.q, genre: deps.genre, sort: deps.sort ?? "trending" }),
     );
   },
   component: ExplorePage,

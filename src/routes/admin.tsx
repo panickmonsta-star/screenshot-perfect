@@ -1,10 +1,14 @@
-import { Link, Outlet, useRouterState } from "@tanstack/react-router";
+import { createFileRoute, Link, Outlet, useRouterState } from "@tanstack/react-router";
 import { BarChart3, Clapperboard, Film, ListOrdered, Package, Receipt, Settings, ShieldAlert, Users, ArrowLeft, Menu } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
+
+export const Route = createFileRoute("/admin")({
+  component: AdminLayout,
+});
 
 const NAV = [
   { to: "/admin", label: "Overview", icon: BarChart3, exact: true },

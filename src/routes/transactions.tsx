@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Suspense } from "react";
 import { useSuspenseQuery } from "@tanstack/react-query";
+import { Button } from "@/components/ui/button";
 import { ArrowDownLeft, ArrowUpRight, ChevronLeft, ChevronRight, ReceiptText } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -8,16 +9,24 @@ import { EmptyState } from "@/components/shared/states";
 import { transactionQueries, type TransactionFilter } from "@/services";
 import { formatCoins, formatDateTime, formatIDR } from "@/lib/format";
 import type { TransactionStatus, TransactionType } from "@/types/domain";
-import { z } from "zod";
 
-const searchSchema = z.object({
-  type: z.enum(["all", "coin_purchase", "episode_unlock"]).optional(),
-  status: z.enum(["all", "completed", "pending", "failed"]).optional(),
-  page: z.coerce.number().int().min(1).optional(),
-});
 
 export const Route = createFileRoute("/transactions")({
-  validateSearch: searchSchema,
+  validateSearch: (search: Record<string, string>) => {
+    const out: { type?: TransactionType | "all"; status?: TransactionStatus | "all"; page?: number } = {};
+    const typeVal = search["type"];
+    if ((["all", "coin_purchase", "episode_unlock"] as const).includes(typeVal as TransactionType)) {
+      out.type = typeVal as TransactionType | "all";
+    }
+    const statusVal = search["status"];
+    if ((["all", "completed", "pending", "failed"] as const).includes(statusVal as TransactionStatus)) {
+      out.status = statusVal as TransactionStatus | "all";
+    }
+    const page = Number(search["page"]);
+    if (Number.isInteger(page) && page >= 1) out.page = page;
+    return out;
+  },
+  loaderDeps: ({ search }) => ({ type: search.type, status: search.status, page: search.page }),
   head: () => ({
     meta: [
       { title: "Transaction history — Panick Monsta" },
@@ -28,12 +37,12 @@ export const Route = createFileRoute("/transactions")({
       { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
-  loader: async ({ context, search }) => {
+  loader: async ({ context, deps }) => {
     await context.queryClient.ensureQueryData(
       transactionQueries.page({
-        type: (search.type as TransactionFilter["type"]) ?? "all",
-        status: (search.status as TransactionFilter["status"]) ?? "all",
-        page: search.page ?? 1,
+        type: (deps.type as TransactionFilter["type"]) ?? "all",
+        status: (deps.status as TransactionFilter["status"]) ?? "all",
+        page: deps.page ?? 1,
       }),
     );
   },
