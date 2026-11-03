@@ -11,12 +11,13 @@ import { catalogQueries, type SeriesSort } from "@/services";
 
 export const Route = createFileRoute("/explore")({
   validateSearch: (search: Record<string, string>) => ({
-    q: typeof search.q === "string" && search.q ? search.q : undefined,
-    genre: typeof search.genre === "string" && search.genre ? search.genre : undefined,
-    sort: (["trending", "newest", "popular", "title"] as const).includes(search.sort as SeriesSort)
-      ? (search.sort as SeriesSort)
+    q: typeof search["q"] === "string" && search["q"] ? search["q"] : undefined,
+    genre: typeof search["genre"] === "string" && search["genre"] ? search["genre"] : undefined,
+    sort: (["trending", "newest", "popular", "title"] as const).includes(search["sort"] as SeriesSort)
+      ? (search["sort"] as SeriesSort)
       : undefined,
   }),
+  loaderDeps: ({ search }) => ({ q: search.q, genre: search.genre, sort: search.sort }),
   head: () => ({
     meta: [
       { title: "Explore dramas — Panick Monsta" },
@@ -27,9 +28,9 @@ export const Route = createFileRoute("/explore")({
       { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
-  loader: async ({ context, search }) => {
+  loader: async ({ context, deps }) => {
     await context.queryClient.ensureQueryData(
-      catalogQueries.list({ query: search.q, genre: search.genre, sort: search.sort ?? "trending" }),
+      catalogQueries.list({ query: deps.q, genre: deps.genre, sort: deps.sort ?? "trending" }),
     );
   },
   component: ExplorePage,

@@ -1,4 +1,4 @@
-import { Link, Outlet, useRouterState } from "@tanstack/react-router";
+import { createFileRoute, Link, Outlet, useRouterState } from "@tanstack/react-router";
 import { BarChart3, Clapperboard, Film, ListOrdered, Package, Receipt, Settings, ShieldAlert, Users, ArrowLeft, Menu } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
