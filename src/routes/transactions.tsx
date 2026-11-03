@@ -8,13 +8,7 @@ import { EmptyState } from "@/components/shared/states";
 import { transactionQueries, type TransactionFilter } from "@/services";
 import { formatCoins, formatDateTime, formatIDR } from "@/lib/format";
 import type { TransactionStatus, TransactionType } from "@/types/domain";
-import { z } from "zod";
 
-const searchSchema = z.object({
-  type: z.enum(["all", "coin_purchase", "episode_unlock"]).optional(),
-  status: z.enum(["all", "completed", "pending", "failed"]).optional(),
-  page: z.coerce.number().int().min(1).optional(),
-});
 
 export const Route = createFileRoute("/transactions")({
   validateSearch: (search: Record<string, string>) => {

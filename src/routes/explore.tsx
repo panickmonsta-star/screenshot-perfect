@@ -7,13 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { SeriesCard } from "@/components/drama/cards";
 import { EmptyState, PosterGridSkeleton } from "@/components/shared/states";
 import { catalogQueries, type SeriesSort } from "@/services";
-import { z } from "zod";
 
-const searchSchema = z.object({
-  q: z.string().optional(),
-  genre: z.string().optional(),
-  sort: z.enum(["trending", "newest", "popular", "title"]).optional(),
-});
 
 export const Route = createFileRoute("/explore")({
   validateSearch: (search: Record<string, string>) => ({
