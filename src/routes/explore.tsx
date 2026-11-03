@@ -10,13 +10,18 @@ import { catalogQueries, type SeriesSort } from "@/services";
 
 
 export const Route = createFileRoute("/explore")({
-  validateSearch: (search: Record<string, string>) => ({
-    q: typeof search["q"] === "string" && search["q"] ? search["q"] : undefined,
-    genre: typeof search["genre"] === "string" && search["genre"] ? search["genre"] : undefined,
-    sort: (["trending", "newest", "popular", "title"] as const).includes(search["sort"] as SeriesSort)
-      ? (search["sort"] as SeriesSort)
-      : undefined,
-  }),
+  validateSearch: (search: Record<string, string>) => {
+    const out: { q?: string; genre?: string; sort?: SeriesSort } = {};
+    const qVal = search["q"];
+    if (qVal) out.q = qVal;
+    const genreVal = search["genre"];
+    if (genreVal) out.genre = genreVal;
+    const sortVal = search["sort"];
+    if ((["trending", "newest", "popular", "title"] as const).includes(sortVal as SeriesSort)) {
+      out.sort = sortVal as SeriesSort;
+    }
+    return out;
+  },
   loaderDeps: ({ search }) => ({ q: search.q, genre: search.genre, sort: search.sort }),
   head: () => ({
     meta: [

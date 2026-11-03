@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Suspense } from "react";
 import { useSuspenseQuery } from "@tanstack/react-query";
+import { Button } from "@/components/ui/button";
 import { ArrowDownLeft, ArrowUpRight, ChevronLeft, ChevronRight, ReceiptText } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -12,16 +13,18 @@ import type { TransactionStatus, TransactionType } from "@/types/domain";
 
 export const Route = createFileRoute("/transactions")({
   validateSearch: (search: Record<string, string>) => {
+    const out: { type?: TransactionType | "all"; status?: TransactionStatus | "all"; page?: number } = {};
+    const typeVal = search["type"];
+    if ((["all", "coin_purchase", "episode_unlock"] as const).includes(typeVal as TransactionType)) {
+      out.type = typeVal as TransactionType | "all";
+    }
+    const statusVal = search["status"];
+    if ((["all", "completed", "pending", "failed"] as const).includes(statusVal as TransactionStatus)) {
+      out.status = statusVal as TransactionStatus | "all";
+    }
     const page = Number(search["page"]);
-    return {
-      type: (["all", "coin_purchase", "episode_unlock"] as const).includes(search["type"] as TransactionType)
-        ? (search["type"] as TransactionType | "all")
-        : undefined,
-      status: (["all", "completed", "pending", "failed"] as const).includes(search["status"] as TransactionStatus)
-        ? (search["status"] as TransactionStatus | "all")
-        : undefined,
-      page: Number.isInteger(page) && page >= 1 ? page : undefined,
-    };
+    if (Number.isInteger(page) && page >= 1) out.page = page;
+    return out;
   },
   loaderDeps: ({ search }) => ({ type: search.type, status: search.status, page: search.page }),
   head: () => ({
