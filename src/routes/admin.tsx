@@ -6,6 +6,10 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/co
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 
+export const Route = createFileRoute("/admin")({
+  component: AdminLayout,
+});
+
 const NAV = [
   { to: "/admin", label: "Overview", icon: BarChart3, exact: true },
   { to: "/admin/series", label: "Series", icon: Clapperboard },
