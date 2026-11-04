@@ -52,7 +52,7 @@ function EpisodesDialog({ form, onClose }: { form: EpisodeFormValues; onClose: (
 
   const save = useMutation({
     mutationFn: async () => {
-      const input = { ...values, title: values.title.trim(), description: values.description.trim(), coinPrice: values.isFree ? 0 : Number(values.coinPrice) };
+      const input = { ...values, title: values.title.trim(), description: values.description.trim(), coinPrice: values.isFree ? 0 : Number(values.coinPrice), videoUrl: null };
       if (!input.seriesId) throw new Error("Pick a series first.");
       if (!input.title) throw new Error("Episode title is required.");
       if (values.id) return adminService.updateEpisode(values.id, input);
