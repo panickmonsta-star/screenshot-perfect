@@ -49,7 +49,7 @@ const SORTS: Array<{ value: SeriesSort; label: string }> = [
   { value: "title", label: "Title A–Z" },
 ];
 
-function ExploreGrid({ query, genre, sort }: { query?: string; genre?: string; sort?: SeriesSort }) {
+function ExploreGrid({ query, genre, sort }: { query?: string | undefined; genre?: string | undefined; sort?: SeriesSort | undefined }) {
   const { data } = useSuspenseQuery(catalogQueries.list({ query, genre, sort }));
   if (data.length === 0) {
     return (
@@ -76,8 +76,15 @@ function ExplorePage() {
 
   useEffect(() => setInput(search.q ?? ""), [search.q]);
 
-  const push = (patch: Partial<{ q: string; genre: string; sort: SeriesSort }>) => {
-    navigate({ to: "/explore", search: (prev) => ({ ...prev, ...patch }) });
+  const push = (patch: { q?: string | undefined; genre?: string | undefined; sort?: SeriesSort | undefined }) => {
+    navigate({
+      to: "/explore",
+      search: compact({ q: search.q, genre: search.genre, sort: search.sort, ...patch }) as {
+        q?: string;
+        genre?: string;
+        sort?: SeriesSort;
+      },
+    });
   };
 
   return (
