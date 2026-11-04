@@ -1,13 +1,14 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { Suspense } from "react";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
-import { ArrowDownLeft, ArrowUpRight, ChevronLeft, ChevronRight, ReceiptText } from "lucide-react";
+import { ArrowDownLeft, ArrowUpRight, ReceiptText } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { EmptyState } from "@/components/shared/states";
 import { transactionQueries, type TransactionFilter } from "@/services";
 import { formatCoins, formatDateTime, formatIDR } from "@/lib/format";
+import { compact as compactSearch } from "@/lib/search";
 import type { TransactionStatus, TransactionType } from "@/types/domain";
 
 
@@ -116,8 +117,12 @@ function TransactionsTable({ filter }: { filter: { type?: TransactionType | "all
         <div className="flex items-center justify-between text-sm">
           <span className="text-muted-foreground">Page {page} of {totalPages} · {data.total} records</span>
           <div className="flex gap-2">
-            <Button variant="outline" size="sm" disabled={page <= 1} asChild><Link to="/transactions" search={(prev) => ({ ...prev, page: page - 1 })}><ChevronLeft className="size-4" /> Prev</Link></Button>
-            <Button variant="outline" size="sm" disabled={page >= totalPages} asChild><Link to="/transactions" search={(prev) => ({ ...prev, page: page + 1 })}>Next <ChevronRight className="size-4" /></Link></Button>
+            <Button variant="outline" size="sm" disabled={page <= 1} asChild>
+              <Link to="/transactions" search={compactSearch({ ...filter, page: page - 1 })}>‹ Prev</Link>
+            </Button>
+            <Button variant="outline" size="sm" disabled={page >= totalPages} asChild>
+              <Link to="/transactions" search={compactSearch({ ...filter, page: page + 1 })}>Next ›</Link>
+            </Button>
           </div>
         </div>
       ) : null}
@@ -127,11 +132,23 @@ function TransactionsTable({ filter }: { filter: { type?: TransactionType | "all
 
 function TransactionsPage() {
   const search = Route.useSearch();
+  const navigate = useNavigate();
   const filter = {
     type: (search.type as TransactionFilter["type"]) ?? "all",
     status: (search.status as TransactionFilter["status"]) ?? "all",
     page: search.page ?? 1,
   };
+  const updateSearch = (patch: Record<string, unknown>) => {
+    navigate({
+      to: "/transactions",
+      search: compactSearch({ type: filter.type, status: filter.status, page: filter.page, ...patch }) as {
+        type?: TransactionType | "all";
+        status?: TransactionStatus | "all";
+        page?: number;
+      },
+    });
+  };
+
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-8 sm:px-6">
@@ -139,7 +156,7 @@ function TransactionsPage() {
       <p className="mt-1 text-sm text-muted-foreground">Demo records from the mock wallet and unlock flows.</p>
 
       <div className="mt-6 flex flex-wrap gap-3">
-        <Select value={filter.type} onValueChange={(v) => Route.navigate({ search: (prev) => ({ ...prev, type: v, page: undefined }) })}>
+        <Select value={filter.type} onValueChange={(v) => updateSearch({ type: v, page: undefined })}>
           <SelectTrigger className="w-44" aria-label="Filter by type"><SelectValue /></SelectTrigger>
           <SelectContent>
             <SelectItem value="all">All types</SelectItem>
@@ -147,7 +164,7 @@ function TransactionsPage() {
             <SelectItem value="episode_unlock">Episode unlocks</SelectItem>
           </SelectContent>
         </Select>
-        <Select value={filter.status} onValueChange={(v) => Route.navigate({ search: (prev) => ({ ...prev, status: v, page: undefined }) })}>
+        <Select value={filter.status} onValueChange={(v) => updateSearch({ status: v, page: undefined })}>
           <SelectTrigger className="w-40" aria-label="Filter by status"><SelectValue /></SelectTrigger>
           <SelectContent>
             <SelectItem value="all">All statuses</SelectItem>

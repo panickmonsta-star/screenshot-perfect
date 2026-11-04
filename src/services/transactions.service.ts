@@ -7,10 +7,10 @@ import type { Transaction, TransactionStatus, TransactionType } from "@/types/do
 import { mockDelay } from "./mock";
 
 export interface TransactionFilter {
-  type?: TransactionType | "all";
-  status?: TransactionStatus | "all";
-  page?: number;
-  pageSize?: number;
+  type?: TransactionType | "all" | undefined;
+  status?: TransactionStatus | "all" | undefined;
+  page?: number | undefined;
+  pageSize?: number | undefined;
 }
 
 export interface TransactionPage {

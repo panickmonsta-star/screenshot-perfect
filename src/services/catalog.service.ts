@@ -9,9 +9,9 @@ import { mockDelay } from "./mock";
 export type SeriesSort = "trending" | "newest" | "popular" | "title";
 
 export interface SeriesFilter {
-  query?: string;
-  genre?: string;
-  sort?: SeriesSort;
+  query?: string | undefined;
+  genre?: string | undefined;
+  sort?: SeriesSort | undefined;
 }
 
 export interface CatalogService {

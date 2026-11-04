@@ -34,7 +34,9 @@ export function SiteHeader() {
   const [signOutOpen, setSignOutOpen] = useState(false);
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const session = useMockSession();
-  const { data: wallet } = useQuery({ ...walletQueries.balance(), enabled: true });
+  // Mock wallet state is per-process, so it differs between the SSR process and
+  // the browser. Fetch browser-side only so SSR and hydration agree on "—".
+  const { data: wallet } = useQuery({ ...walletQueries.balance(), enabled: typeof window !== "undefined" });
 
   const submitSearch = (e: React.FormEvent) => {
     e.preventDefault();
