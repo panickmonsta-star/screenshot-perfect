@@ -116,8 +116,12 @@ function TransactionsTable({ filter }: { filter: { type?: TransactionType | "all
         <div className="flex items-center justify-between text-sm">
           <span className="text-muted-foreground">Page {page} of {totalPages} · {data.total} records</span>
           <div className="flex gap-2">
-            <Button variant="outline" size="sm" disabled={page <= 1} asChild><Link to="/transactions" search={(prev) => ({ ...prev, page: page - 1 })}><ChevronLeft className="size-4" /> Prev</Link></Button>
-            <Button variant="outline" size="sm" disabled={page >= totalPages} asChild><Link to="/transactions" search={(prev) => ({ ...prev, page: page + 1 })}>Next <ChevronRight className="size-4" /></Link></Button>
+            <Button variant="outline" size="sm" disabled={page <= 1} asChild>
+              <Link to="/transactions" search={compactSearch({ ...filter, page: page - 1 })}>‹ Prev</Link>
+            </Button>
+            <Button variant="outline" size="sm" disabled={page >= totalPages} asChild>
+              <Link to="/transactions" search={compactSearch({ ...filter, page: page + 1 })}>Next ›</Link>
+            </Button>
           </div>
         </div>
       ) : null}

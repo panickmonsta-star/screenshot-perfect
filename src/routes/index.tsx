@@ -106,7 +106,7 @@ function GenreChips() {
   );
 }
 
-function Section({ title, icon, moreHref, children }: { title: string; icon?: React.ReactNode; moreHref?: string; children: React.ReactNode }) {
+function Section({ title, icon, moreHref, children }: { title: string; icon?: React.ReactNode; moreHref?: string | undefined; children: React.ReactNode }) {
   return (
     <section className="mx-auto max-w-7xl px-4 py-6 sm:px-6">
       <div className="mb-4 flex items-center justify-between">
