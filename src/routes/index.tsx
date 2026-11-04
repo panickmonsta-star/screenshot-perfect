@@ -7,7 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { SeriesCard } from "@/components/drama/cards";
 import { PosterGridSkeleton } from "@/components/shared/states";
-import { catalogQueries, libraryQueries } from "@/services";
+import { catalogQueries, libraryQueries, type SeriesFilter } from "@/services";
 import { formatDuration, formatViews } from "@/lib/format";
 
 const GENRES = ["Romance", "Thriller", "Fantasy", "Comedy", "Mystery", "Drama", "Horror", "Action"];
@@ -165,7 +165,7 @@ function ContinueWatching() {
   );
 }
 
-function SeriesRow({ filter, icon, moreHref }: { filter: Parameters<typeof catalogQueries.list>[0]; icon?: React.ReactNode; moreHref?: string }) {
+function SeriesRow({ filter, icon, moreHref }: { filter: SeriesFilter; icon?: React.ReactNode; moreHref?: string | undefined }) {
   const { data } = useSuspenseQuery(catalogQueries.list(filter));
   return (
     <Section title={filter.sort === "trending" ? "Trending now" : filter.sort === "popular" ? "Popular dramas" : filter.sort === "newest" ? "Recently added" : "Recommended for you"} icon={icon} moreHref={moreHref}>

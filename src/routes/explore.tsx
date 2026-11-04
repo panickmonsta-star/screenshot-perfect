@@ -7,6 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { SeriesCard } from "@/components/drama/cards";
 import { EmptyState, PosterGridSkeleton } from "@/components/shared/states";
 import { catalogQueries, type SeriesSort } from "@/services";
+import { compact } from "@/lib/search";
 
 
 export const Route = createFileRoute("/explore")({
