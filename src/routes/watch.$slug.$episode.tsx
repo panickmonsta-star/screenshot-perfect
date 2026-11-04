@@ -17,12 +17,12 @@ export const Route = createFileRoute("/watch/$slug/$episode")({
     parse: (p) => ({ slug: p.slug, episode: Number(p.episode) }),
     stringify: (p) => ({ slug: p.slug, episode: String(p.episode) }),
   },
-  head: ({ loaderData }) => ({
+  head: () => ({
     meta: [
-      { title: loaderData ? `${loaderData.series.title} · EP${loaderData.episode.episodeNumber} — Panick Monsta` : "Watch — Panick Monsta" },
-      { name: "description", content: loaderData ? `Watch episode ${loaderData.episode.episodeNumber} of ${loaderData.series.title}.` : "Watch a short drama episode." },
-      { property: "og:title", content: loaderData ? `${loaderData.series.title} · EP${loaderData.episode.episodeNumber}` : "Watch — Panick Monsta" },
-      { property: "og:description", content: loaderData ? `Watch episode ${loaderData.episode.episodeNumber} of ${loaderData.series.title}.` : "Watch a short drama episode." },
+      { title: "Watch episode — Panick Monsta" },
+      { name: "description", content: "Watch a short drama episode with free and coin-unlocked access." },
+      { property: "og:title", content: "Watch episode — Panick Monsta" },
+      { property: "og:description", content: "Watch a short drama episode with free and coin-unlocked access." },
       { property: "og:type", content: "video.other" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -41,7 +41,10 @@ export const Route = createFileRoute("/watch/$slug/$episode")({
 });
 
 function WatchBody() {
-  const { series, episode, neighbours } = Route.useLoaderData();
+  const { slug, episode: episodeNumber } = Route.useParams();
+  const { data: watchData } = useSuspenseQuery(catalogQueries.watch(slug, episodeNumber));
+  if (!watchData) return null;
+  const { series, episode, neighbours } = watchData;
   const { data: access } = useSuspenseQuery(accessQueries.check(episode.id));
   const { data: wallet } = useQuery(walletQueries.balance());
   const { data: episodes } = useSuspenseQuery(catalogQueries.episodes(series.slug));

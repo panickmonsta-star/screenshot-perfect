@@ -81,8 +81,10 @@ function EpisodeList({ slug }: { slug: string }) {
 }
 
 function SeriesPage() {
-  const { series } = Route.useLoaderData();
-  const { data: episodes } = useSuspenseQuery(catalogQueries.episodes(series.slug));
+  const { slug } = Route.useParams();
+  const { data: series } = useSuspenseQuery(catalogQueries.bySlug(slug));
+  const { data: episodes } = useSuspenseQuery(catalogQueries.episodes(slug));
+  if (!series) return null;
   const freeCount = episodes.filter((e) => e.isFree).length;
   const downloadableCount = episodes.filter((e) => e.downloadEnabled).length;
 
