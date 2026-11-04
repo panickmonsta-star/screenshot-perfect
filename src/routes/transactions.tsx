@@ -8,7 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { EmptyState } from "@/components/shared/states";
 import { transactionQueries, type TransactionFilter } from "@/services";
 import { formatCoins, formatDateTime, formatIDR } from "@/lib/format";
-import { compactSearch } from "@/lib/search";
+import { compact as compactSearch } from "@/lib/search";
 import type { TransactionStatus, TransactionType } from "@/types/domain";
 
 

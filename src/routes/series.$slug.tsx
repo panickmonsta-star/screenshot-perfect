@@ -11,12 +11,12 @@ import { accessQueries, catalogQueries, walletQueries } from "@/services";
 import { formatViews } from "@/lib/format";
 
 export const Route = createFileRoute("/series/$slug")({
-  head: ({ loaderData }) => ({
+  head: () => ({
     meta: [
-      { title: loaderData ? `${loaderData.series.title} — Panick Monsta` : "Series — Panick Monsta" },
-      { name: "description", content: loaderData?.series.synopsis ?? "Short drama series details." },
-      { property: "og:title", content: loaderData ? `${loaderData.series.title} — Panick Monsta` : "Series — Panick Monsta" },
-      { property: "og:description", content: loaderData?.series.synopsis ?? "Short drama series details." },
+      { title: "Series — Panick Monsta" },
+      { name: "description", content: "Short drama series details, episodes and unlock options." },
+      { property: "og:title", content: "Series — Panick Monsta" },
+      { property: "og:description", content: "Short drama series details, episodes and unlock options." },
       { property: "og:type", content: "video.tv_show" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
