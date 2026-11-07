@@ -14,6 +14,42 @@ export type Database = {
   }
   public: {
     Tables: {
+      coin_packages: {
+        Row: {
+          active: boolean
+          bonus_coins: number
+          coin_amount: number
+          created_at: string
+          id: string
+          name: string
+          popular: boolean
+          price_idr: number
+          updated_at: string
+        }
+        Insert: {
+          active?: boolean
+          bonus_coins?: number
+          coin_amount: number
+          created_at?: string
+          id?: string
+          name: string
+          popular?: boolean
+          price_idr: number
+          updated_at?: string
+        }
+        Update: {
+          active?: boolean
+          bonus_coins?: number
+          coin_amount?: number
+          created_at?: string
+          id?: string
+          name?: string
+          popular?: boolean
+          price_idr?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
       comments: {
         Row: {
           content: string
@@ -46,11 +82,273 @@ export type Database = {
           },
         ]
       }
+      download_jobs: {
+        Row: {
+          created_at: string
+          episode_id: string
+          expires_at: string | null
+          id: string
+          status: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          episode_id: string
+          expires_at?: string | null
+          id?: string
+          status?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          episode_id?: string
+          expires_at?: string | null
+          id?: string
+          status?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "download_jobs_episode_id_fkey"
+            columns: ["episode_id"]
+            isOneToOne: false
+            referencedRelation: "episodes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      download_settings: {
+        Row: {
+          bulk_first_five_episodes: boolean
+          id: boolean
+          platform_name: string
+          positions: Json
+          updated_at: string
+          updated_by: string | null
+          watermark_logo_url: string | null
+          watermark_text: string
+        }
+        Insert: {
+          bulk_first_five_episodes?: boolean
+          id?: boolean
+          platform_name?: string
+          positions?: Json
+          updated_at?: string
+          updated_by?: string | null
+          watermark_logo_url?: string | null
+          watermark_text?: string
+        }
+        Update: {
+          bulk_first_five_episodes?: boolean
+          id?: boolean
+          platform_name?: string
+          positions?: Json
+          updated_at?: string
+          updated_by?: string | null
+          watermark_logo_url?: string | null
+          watermark_text?: string
+        }
+        Relationships: []
+      }
+      episode_entitlements: {
+        Row: {
+          episode_id: string
+          episode_number: number
+          id: string
+          series_id: string
+          source: string
+          unlocked_at: string
+          user_id: string
+        }
+        Insert: {
+          episode_id: string
+          episode_number: number
+          id?: string
+          series_id: string
+          source: string
+          unlocked_at?: string
+          user_id: string
+        }
+        Update: {
+          episode_id?: string
+          episode_number?: number
+          id?: string
+          series_id?: string
+          source?: string
+          unlocked_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "episode_entitlements_episode_id_fkey"
+            columns: ["episode_id"]
+            isOneToOne: false
+            referencedRelation: "episodes"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "episode_entitlements_series_id_fkey"
+            columns: ["series_id"]
+            isOneToOne: false
+            referencedRelation: "series"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      episodes: {
+        Row: {
+          aspect_ratio: string
+          coin_price: number
+          created_at: string
+          description: string
+          download_enabled: boolean
+          duration_seconds: number
+          episode_number: number
+          id: string
+          is_free: boolean
+          series_id: string
+          status: string
+          thumbnail_url: string
+          title: string
+          updated_at: string
+          video_asset_key: string | null
+        }
+        Insert: {
+          aspect_ratio?: string
+          coin_price?: number
+          created_at?: string
+          description?: string
+          download_enabled?: boolean
+          duration_seconds?: number
+          episode_number: number
+          id?: string
+          is_free?: boolean
+          series_id: string
+          status?: string
+          thumbnail_url?: string
+          title: string
+          updated_at?: string
+          video_asset_key?: string | null
+        }
+        Update: {
+          aspect_ratio?: string
+          coin_price?: number
+          created_at?: string
+          description?: string
+          download_enabled?: boolean
+          duration_seconds?: number
+          episode_number?: number
+          id?: string
+          is_free?: boolean
+          series_id?: string
+          status?: string
+          thumbnail_url?: string
+          title?: string
+          updated_at?: string
+          video_asset_key?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "episodes_series_id_fkey"
+            columns: ["series_id"]
+            isOneToOne: false
+            referencedRelation: "series"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      payment_attempts: {
+        Row: {
+          amount_idr: number
+          channel_code: string
+          checkout_actions: Json
+          coin_amount: number
+          created_at: string
+          expires_at: string | null
+          id: string
+          package_id: string | null
+          provider: string
+          provider_payment_id: string | null
+          provider_request_id: string | null
+          reference: string
+          status: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          amount_idr: number
+          channel_code: string
+          checkout_actions?: Json
+          coin_amount: number
+          created_at?: string
+          expires_at?: string | null
+          id?: string
+          package_id?: string | null
+          provider?: string
+          provider_payment_id?: string | null
+          provider_request_id?: string | null
+          reference: string
+          status?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          amount_idr?: number
+          channel_code?: string
+          checkout_actions?: Json
+          coin_amount?: number
+          created_at?: string
+          expires_at?: string | null
+          id?: string
+          package_id?: string | null
+          provider?: string
+          provider_payment_id?: string | null
+          provider_request_id?: string | null
+          reference?: string
+          status?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "payment_attempts_package_id_fkey"
+            columns: ["package_id"]
+            isOneToOne: false
+            referencedRelation: "coin_packages"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      platform_settings: {
+        Row: {
+          setting_key: string
+          settings: Json
+          updated_at: string
+          updated_by: string | null
+        }
+        Insert: {
+          setting_key: string
+          settings?: Json
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Update: {
+          setting_key?: string
+          settings?: Json
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           avatar_url: string | null
           banner_url: string | null
           created_at: string | null
+          display_name: string | null
           id: string
           updated_at: string | null
           username: string | null
@@ -59,6 +357,7 @@ export type Database = {
           avatar_url?: string | null
           banner_url?: string | null
           created_at?: string | null
+          display_name?: string | null
           id: string
           updated_at?: string | null
           username?: string | null
@@ -67,9 +366,61 @@ export type Database = {
           avatar_url?: string | null
           banner_url?: string | null
           created_at?: string | null
+          display_name?: string | null
           id?: string
           updated_at?: string | null
           username?: string | null
+        }
+        Relationships: []
+      }
+      series: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          featured: boolean
+          genre: string
+          id: string
+          poster_url: string
+          release_year: number
+          slug: string
+          status: string
+          synopsis: string
+          title: string
+          total_views: number
+          trending: boolean
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          featured?: boolean
+          genre?: string
+          id?: string
+          poster_url?: string
+          release_year?: number
+          slug: string
+          status?: string
+          synopsis?: string
+          title: string
+          total_views?: number
+          trending?: boolean
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          featured?: boolean
+          genre?: string
+          id?: string
+          poster_url?: string
+          release_year?: number
+          slug?: string
+          status?: string
+          synopsis?: string
+          title?: string
+          total_views?: number
+          trending?: boolean
+          updated_at?: string
         }
         Relationships: []
       }
@@ -91,6 +442,62 @@ export type Database = {
         }
         Relationships: []
       }
+      transactions: {
+        Row: {
+          amount_idr: number | null
+          coin_amount: number
+          created_at: string
+          episode_number: number | null
+          id: string
+          payment_attempt_id: string | null
+          provider_payment_id: string | null
+          reference: string
+          series_title: string | null
+          status: string
+          title: string
+          type: string
+          user_id: string
+        }
+        Insert: {
+          amount_idr?: number | null
+          coin_amount: number
+          created_at?: string
+          episode_number?: number | null
+          id?: string
+          payment_attempt_id?: string | null
+          provider_payment_id?: string | null
+          reference: string
+          series_title?: string | null
+          status?: string
+          title: string
+          type: string
+          user_id: string
+        }
+        Update: {
+          amount_idr?: number | null
+          coin_amount?: number
+          created_at?: string
+          episode_number?: number | null
+          id?: string
+          payment_attempt_id?: string | null
+          provider_payment_id?: string | null
+          reference?: string
+          series_title?: string | null
+          status?: string
+          title?: string
+          type?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "transactions_payment_attempt_id_fkey"
+            columns: ["payment_attempt_id"]
+            isOneToOne: false
+            referencedRelation: "payment_attempts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       user_roles: {
         Row: {
           id: string
@@ -105,6 +512,27 @@ export type Database = {
         Update: {
           id?: string
           role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
+      user_wallets: {
+        Row: {
+          balance: number
+          created_at: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          balance?: number
+          created_at?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          balance?: number
+          created_at?: string
+          updated_at?: string
           user_id?: string
         }
         Relationships: []
@@ -209,11 +637,76 @@ export type Database = {
           },
         ]
       }
+      watch_progress: {
+        Row: {
+          duration_seconds: number
+          episode_id: string
+          position_seconds: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          duration_seconds?: number
+          episode_id: string
+          position_seconds?: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          duration_seconds?: number
+          episode_id?: string
+          position_seconds?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "watch_progress_episode_id_fkey"
+            columns: ["episode_id"]
+            isOneToOne: false
+            referencedRelation: "episodes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      webhook_events: {
+        Row: {
+          event_type: string
+          id: string
+          processed_at: string
+          provider: string
+          provider_event_id: string
+        }
+        Insert: {
+          event_type: string
+          id?: string
+          processed_at?: string
+          provider: string
+          provider_event_id: string
+        }
+        Update: {
+          event_type?: string
+          id?: string
+          processed_at?: string
+          provider?: string
+          provider_event_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
+      credit_xendit_payment: {
+        Args: {
+          p_amount_idr: number
+          p_attempt_id: string
+          p_event_id: string
+          p_provider_payment_id: string
+        }
+        Returns: boolean
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
@@ -225,6 +718,7 @@ export type Database = {
         Args: { p_video_id: string }
         Returns: undefined
       }
+      unlock_episode: { Args: { p_episode_id: string }; Returns: Json }
     }
     Enums: {
       app_role: "admin" | "moderator" | "user"
